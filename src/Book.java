@@ -1,8 +1,8 @@
 public class Book
 {
-	private String name;
-	private int chapters;
-	private String summary;
+	public String name;
+	public int chapters;
+	public String summary;
 	
 	public Book(String commaDelimited)
 	{

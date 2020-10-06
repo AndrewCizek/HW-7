@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -9,26 +10,31 @@ public class Driver
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		Book[] books = new Book[27];
-		
 		Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/info.dat"));
+		ArrayList<String> bookData = new ArrayList<String>();
 		Scanner user = new Scanner(System.in);
 		System.out.print("Enter a key word/s: ");
-		String s = user.nextLine();
-		Pattern r = Pattern.compile(s);
+		String s = user.nextLine().toLowerCase();
 		
-		int pos = 0;
 		while(input.hasNext())
 		{
-			books[pos] = new Book(input.nextLine());
-			String line = Book.summary; //somehow convert each section to a string
-			Matcher m = r.matcher(line.toLowerCase());
-			if (m.find()) 
+			bookData.add(input.nextLine());
+		}		
+		for(int i = 0; i < bookData.size(); i++)
+		{
+			String info = bookData.get(i).toString().toLowerCase();
+			if(info.contains(s))
 			{
-			    System.out.println(line);
+				
+				String f = (bookData.get(i).toString());
+				String[] parts = f.split(",");
+				String name = parts[0];
+				int chapters = Integer.parseInt(parts[1]);
+				String summary = parts[2];
+				System.out.printf("Name: %s \nChapters: %d \nSummary: %s \n", name, chapters, summary);
+				break;
 			}
-			pos++;
-		}
+		}	
 		input.close();
 		user.close();
 	}
